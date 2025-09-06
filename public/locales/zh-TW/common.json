@@ -1,0 +1,102 @@
+{
+  "company": {
+    "name": "BIZOE INTERACTIVE INFORMATION TECHNOLOGY CO., LIMITED",
+    "email": "luotian@joy8899.com"
+  },
+  "navigation": {
+    "home": "首頁",
+    "products": "商品列表",
+    "about": "關於我們",
+    "contact": "聯絡我們",
+    "cart": "購物車",
+    "account": "我的帳戶",
+    "login": "會員登入",
+    "register": "註冊新會員",
+    "logout": "會員登出",
+    "search": "搜尋",
+    "categories": "商品分類",
+    "orders": "訂單查詢",
+    "wishlist": "收藏清單"
+  },
+  "products": {
+    "3d_printers": "3D 列印機",
+    "printing_materials": "列印材料",
+    "post_processing": "後處理設備",
+    "3d_scanners": "3D掃描器",
+    "laser_cutting": "雷切/雷雕機",
+    "price": "價格",
+    "add_to_cart": "加入購物車",
+    "buy_now": "立即購買",
+    "view_details": "查看詳情",
+    "specifications": "規格",
+    "description": "產品描述",
+    "reviews": "客戶評價",
+    "related_products": "相關產品"
+  },
+  "cart": {
+    "title": "購物車",
+    "empty": "目前的購物車是空的！",
+    "subtotal": "小計",
+    "total": "總計",
+    "checkout": "結帳",
+    "continue_shopping": "繼續購物",
+    "remove": "移除",
+    "quantity": "數量",
+    "update": "更新"
+  },
+  "auth": {
+    "login": "登入",
+    "register": "註冊",
+    "email": "電子郵件",
+    "password": "密碼",
+    "confirm_password": "確認密碼",
+    "forgot_password": "忘記密碼？",
+    "remember_me": "記住我",
+    "first_name": "姓名",
+    "last_name": "姓氏",
+    "phone": "電話號碼",
+    "address": "地址"
+  },
+  "orders": {
+    "title": "訂單查詢",
+    "order_number": "訂單編號",
+    "order_date": "訂購日期",
+    "status": "狀態",
+    "total_amount": "總金額",
+    "view_order": "查看訂單",
+    "track_order": "追蹤訂單",
+    "cancel_order": "取消訂單"
+  },
+  "footer": {
+    "customer_service": "客戶服務",
+    "about_us": "關於我們",
+    "privacy_policy": "隱私政策",
+    "terms_of_service": "服務條款",
+    "contact_info": "聯絡資訊",
+    "follow_us": "追蹤我們",
+    "newsletter": "訂閱電子報",
+    "copyright": "版權所有"
+  },
+  "buttons": {
+    "submit": "提交",
+    "cancel": "取消",
+    "save": "保存",
+    "delete": "刪除",
+    "edit": "編輯",
+    "close": "關閉",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "confirm": "確認"
+  },
+  "messages": {
+    "loading": "載入中...",
+    "error": "發生錯誤",
+    "success": "操作成功",
+    "no_results": "沒有找到結果",
+    "please_wait": "請稍候",
+    "required_field": "此欄位為必填",
+    "invalid_email": "請輸入有效的電子郵件地址",
+    "password_mismatch": "密碼不匹配"
+  }
+}
