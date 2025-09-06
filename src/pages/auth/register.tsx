@@ -36,10 +36,10 @@ export default function Register() {
     agreeToTerms: false,
     subscribeNewsletter: true
   })
-  const [errors, setErrors] = useState<Partial<RegisterForm>>({})
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const validateForm = () => {
-    const newErrors: Partial<RegisterForm> = {}
+    const newErrors: Record<string, string> = {}
 
     // First Name validation
     if (!formData.firstName.trim()) {
@@ -136,8 +136,10 @@ export default function Register() {
       [name]: type === 'checkbox' ? checked : value
     }))
     // Clear error when user starts typing
-    if (errors[name as keyof RegisterForm]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }))
+    if (errors[name]) {
+      const newErrors = { ...errors }
+      delete newErrors[name]
+      setErrors(newErrors)
     }
   }
 

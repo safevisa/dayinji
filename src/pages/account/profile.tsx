@@ -10,7 +10,8 @@ import {
   CameraIcon,
   EyeIcon,
   EyeSlashIcon,
-  CheckIcon
+  CheckIcon,
+  ShoppingBagIcon
 } from '@heroicons/react/24/outline'
 import Layout from '@/components/layout/Layout'
 import { useAuthStore } from '@/store/authStore'
@@ -78,7 +79,7 @@ export default function Profile() {
     confirmNewPassword: ''
   })
 
-  const [errors, setErrors] = useState<any>({})
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const handleProfileSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -108,7 +109,7 @@ export default function Profile() {
     e.preventDefault()
     
     // 验证密码
-    const newErrors: any = {}
+    const newErrors: Record<string, string> = {}
     
     if (!passwordForm.currentPassword) {
       newErrors.currentPassword = '請輸入當前密碼'
@@ -461,7 +462,9 @@ export default function Profile() {
                             onChange={(e) => {
                               setPasswordForm(prev => ({ ...prev, currentPassword: e.target.value }))
                               if (errors.currentPassword) {
-                                setErrors(prev => ({ ...prev, currentPassword: undefined }))
+                                const newErrors = { ...errors }
+                                delete newErrors.currentPassword
+                                setErrors(newErrors)
                               }
                             }}
                             className={`input pr-10 ${errors.currentPassword ? 'border-red-300' : ''}`}
@@ -497,7 +500,9 @@ export default function Profile() {
                             onChange={(e) => {
                               setPasswordForm(prev => ({ ...prev, newPassword: e.target.value }))
                               if (errors.newPassword) {
-                                setErrors(prev => ({ ...prev, newPassword: undefined }))
+                                const newErrors = { ...errors }
+                                delete newErrors.newPassword
+                                setErrors(newErrors)
                               }
                             }}
                             className={`input pr-10 ${errors.newPassword ? 'border-red-300' : ''}`}
@@ -555,7 +560,9 @@ export default function Profile() {
                             onChange={(e) => {
                               setPasswordForm(prev => ({ ...prev, confirmNewPassword: e.target.value }))
                               if (errors.confirmNewPassword) {
-                                setErrors(prev => ({ ...prev, confirmNewPassword: undefined }))
+                                const newErrors = { ...errors }
+                                delete newErrors.confirmNewPassword
+                                setErrors(newErrors)
                               }
                             }}
                             className={`input pr-10 ${errors.confirmNewPassword ? 'border-red-300' : ''}`}

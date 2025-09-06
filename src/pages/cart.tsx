@@ -63,7 +63,7 @@ export default function Cart() {
 
   const handleApplyPromoCode = () => {
     // 模拟促销码验证
-    const validPromoCodes = {
+    const validPromoCodes: Record<string, number> = {
       'WELCOME10': 10,
       'SAVE15': 15,
       'NEWUSER': 20,

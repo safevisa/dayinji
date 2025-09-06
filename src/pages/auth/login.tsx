@@ -25,10 +25,10 @@ export default function Login() {
     password: '',
     rememberMe: false
   })
-  const [errors, setErrors] = useState<Partial<LoginForm>>({})
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const validateForm = () => {
-    const newErrors: Partial<LoginForm> = {}
+    const newErrors: Record<string, string> = {}
 
     if (!formData.email) {
       newErrors.email = '請輸入電子郵件'
@@ -93,8 +93,10 @@ export default function Login() {
       [name]: type === 'checkbox' ? checked : value
     }))
     // Clear error when user starts typing
-    if (errors[name as keyof LoginForm]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }))
+    if (errors[name]) {
+      const newErrors = { ...errors }
+      delete newErrors[name]
+      setErrors(newErrors)
     }
   }
 
