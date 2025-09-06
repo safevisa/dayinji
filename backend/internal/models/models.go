@@ -45,9 +45,10 @@ type Category struct {
 	UpdatedAt   time.Time `json:"updatedAt"`
 
 	// Relationships
-	Products []Product  `json:"products,omitempty"`
-	Parent   *Category  `json:"parent,omitempty" gorm:"foreignKey:ParentID"`
-	Children []Category `json:"children,omitempty" gorm:"foreignKey:ParentID"`
+	Products     []Product  `json:"products,omitempty"`
+	Parent       *Category  `json:"parent,omitempty" gorm:"foreignKey:ParentID"`
+	Children     []Category `json:"children,omitempty" gorm:"foreignKey:ParentID"`
+	ProductCount int        `json:"productCount" gorm:"-"` // Not stored in DB, calculated dynamically
 }
 
 func (c *Category) BeforeCreate(tx *gorm.DB) error {

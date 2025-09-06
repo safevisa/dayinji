@@ -49,7 +49,7 @@ func Load() *Config {
 		Environment:          getEnv("ENVIRONMENT", "development"),
 		Port:                 getEnv("PORT", "8080"),
 		APIBaseURL:           getEnv("API_BASE_URL", "http://localhost:8080"),
-		DatabaseURL:          getEnv("DATABASE_URL", "root:password@tcp(localhost:3306)/bizoe_3d_store?charset=utf8mb4&parseTime=True&loc=Local"),
+		DatabaseURL:          getEnv("DATABASE_URL", "sqlite://bizoe_store.db"),
 		JWTSecret:            getEnv("JWT_SECRET", "your-secret-key-change-this-in-production"),
 		StripeSecretKey:      getEnv("STRIPE_SECRET_KEY", ""),
 		StripePublishableKey: getEnv("STRIPE_PUBLISHABLE_KEY", ""),

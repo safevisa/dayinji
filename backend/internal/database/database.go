@@ -4,9 +4,11 @@ import (
 	"bizoe-3d-store/internal/models"
 	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	"gorm.io/driver/mysql"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -21,8 +23,19 @@ func Initialize(databaseURL string) (*gorm.DB, error) {
 		},
 	}
 
-	// Connect to database
-	db, err := gorm.Open(mysql.Open(databaseURL), config)
+	var db *gorm.DB
+	var err error
+
+	// Check if it's SQLite or MySQL
+	if strings.HasPrefix(databaseURL, "sqlite://") {
+		// SQLite database
+		dbPath := strings.TrimPrefix(databaseURL, "sqlite://")
+		db, err = gorm.Open(sqlite.Open(dbPath), config)
+	} else {
+		// MySQL database
+		db, err = gorm.Open(mysql.Open(databaseURL), config)
+	}
+
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to database: %w", err)
 	}

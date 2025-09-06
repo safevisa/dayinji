@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { HeartIcon, ShoppingCartIcon, EyeIcon } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid'
-import { Product } from '@/types'
+import { Product } from '@/data/products'
 import { useCartStore } from '@/store/cartStore'
 import toast from 'react-hot-toast'
 
@@ -22,7 +22,13 @@ export default function ProductCard({
   const { t } = useTranslation('common')
   const [isWishlisted, setIsWishlisted] = useState(false)
   const [imageLoading, setImageLoading] = useState(true)
+  const [mounted, setMounted] = useState(false)
   const { addItem } = useCartStore()
+
+  // 防止hydration错误
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -148,7 +154,7 @@ export default function ProductCard({
         </div>
 
         {/* Category */}
-        <p className="text-xs text-gray-500 mb-2">{product.category?.name}</p>
+        <p className="text-xs text-gray-500 mb-2">{product.category}</p>
 
         {/* Price */}
         <div className="flex items-center justify-between mb-3">

@@ -3,10 +3,10 @@ import { useTranslation } from 'next-i18next'
 
 const navigation = {
   shop: [
-    { name: 'products.3d_printers', href: '/products/3d-printers' },
-    { name: 'products.printing_materials', href: '/products/materials' },
-    { name: 'products.post_processing', href: '/products/equipment' },
-    { name: 'products.3d_scanners', href: '/products/scanners' },
+    { name: 'products.3d_printers', href: '/products?category=3d-printers' },
+    { name: 'products.printing_materials', href: '/products?category=materials' },
+    { name: 'products.post_processing', href: '/products?category=post-processing' },
+    { name: 'products.3d_scanners', href: '/products?category=3d-scanners' },
   ],
   company: [
     { name: 'footer.about_us', href: '/about' },
@@ -15,10 +15,10 @@ const navigation = {
     { name: 'footer.terms_of_service', href: '/terms' },
   ],
   customerService: [
-    { name: 'navigation.orders', href: '/orders' },
-    { name: 'Return Policy', href: '/returns' },
-    { name: 'Shipping Info', href: '/shipping' },
-    { name: 'FAQ', href: '/faq' },
+    { name: 'navigation.orders', href: '/account/orders' },
+    { name: 'footer.return_policy', href: '/returns' },
+    { name: 'footer.shipping_info', href: '/shipping' },
+    { name: 'footer.faq', href: '/faq' },
   ],
   social: [
     {
@@ -117,7 +117,7 @@ export default function Footer() {
                         href={item.href}
                         className="text-sm leading-6 text-gray-300 hover:text-white"
                       >
-                        {item.name}
+                        {t(item.name)}
                       </Link>
                     </li>
                   ))}
@@ -147,7 +147,10 @@ export default function Footer() {
                     Email: {t('company.email')}
                   </p>
                   <p className="text-sm leading-6 text-gray-300">
-                    Price Range: $19.9 - $39.9
+                    {t('company.address')}
+                  </p>
+                  <p className="text-sm leading-6 text-gray-300">
+                    {t('company.phone')}
                   </p>
                 </div>
               </div>

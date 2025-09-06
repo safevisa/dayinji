@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -20,27 +20,31 @@ const navigation = {
       id: 'printers',
       name: 'products.3d_printers',
       featured: [
-        { name: 'Phrozen 普羅森', href: '/products/phrozen' },
-        { name: 'Formlabs 風雷', href: '/products/formlabs' },
-        { name: 'Bambu Lab 拓竹', href: '/products/bambu-lab' },
+        { name: 'Phrozen 普羅森', href: '/products?category=3d-printers&brand=phrozen' },
+        { name: 'Formlabs 風雷', href: '/products?category=3d-printers&brand=formlabs' },
+        { name: 'Bambu Lab 拓竹', href: '/products?category=3d-printers&brand=bambu' },
+        { name: '查看全部', href: '/products?category=3d-printers' },
       ],
     },
     {
       id: 'materials',
       name: 'products.printing_materials',
       featured: [
-        { name: 'Phrozen 樹脂', href: '/products/phrozen-resin' },
-        { name: 'Formlabs 材料', href: '/products/formlabs-materials' },
-        { name: '線材耗材', href: '/products/filaments' },
+        { name: 'Phrozen 樹脂', href: '/products?category=materials&brand=phrozen' },
+        { name: 'PLA+ 線材', href: '/products?category=materials&type=pla' },
+        { name: 'PETG 材料', href: '/products?category=materials&type=petg' },
+        { name: '清洗劑', href: '/products?category=materials&type=cleaner' },
+        { name: '查看全部', href: '/products?category=materials' },
       ],
     },
     {
       id: 'equipment',
       name: 'products.post_processing',
       featured: [
-        { name: '固化/清洗系統', href: '/products/curing-washing' },
-        { name: '空氣清淨系統', href: '/products/air-filtration' },
-        { name: '電動打磨系統', href: '/products/sanding' },
+        { name: '固化/清洗系統', href: '/products?category=post-processing&type=curing' },
+        { name: '空氣清淨系統', href: '/products?category=post-processing&type=filtration' },
+        { name: '打磨系統', href: '/products?category=post-processing&type=sanding' },
+        { name: '查看全部', href: '/products?category=post-processing' },
       ],
     },
   ],
@@ -51,10 +55,15 @@ export default function Header() {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const { isAuthenticated, user, logout } = useAuthStore()
   const { getItemCount } = useCartStore()
 
-  const cartItemCount = getItemCount()
+  const cartItemCount = mounted ? getItemCount() : 0
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const changeLanguage = (locale: string) => {
     const { pathname, asPath, query } = router
@@ -101,6 +110,14 @@ export default function Header() {
                 </div>
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+                  <div className="flow-root">
+                    <Link
+                      href="/promotions"
+                      className="-m-2 block p-2 font-medium text-red-600 hover:text-red-700"
+                    >
+                      🔥 {t('navigation.promotions')}
+                    </Link>
+                  </div>
                   {navigation.categories.map((category) => (
                     <div key={category.name} className="flow-root">
                       <p className="-m-2 block p-2 font-medium text-gray-900">
@@ -187,6 +204,12 @@ export default function Header() {
               {/* Flyout menus */}
               <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
                 <div className="flex h-full space-x-8">
+                  <Link
+                    href="/promotions"
+                    className="flex items-center text-sm font-medium text-red-600 hover:text-red-700 border-b-2 border-transparent hover:border-red-600 transition-colors"
+                  >
+                    🔥 {t('navigation.promotions')}
+                  </Link>
                   {navigation.categories.map((category) => (
                     <Popover key={category.name} className="flex">
                       {({ open }) => (
@@ -216,20 +239,22 @@ export default function Header() {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                           >
-                            <Popover.Panel className="absolute inset-x-0 top-full text-sm text-gray-500">
+                            <Popover.Panel className="absolute inset-x-0 top-full text-sm text-gray-500 z-10">
                               <div className="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
 
                               <div className="relative bg-white">
                                 <div className="mx-auto max-w-7xl px-8">
-                                  <div className="grid grid-cols-1 gap-x-8 gap-y-10 py-16">
-                                    <div className="grid grid-cols-3 gap-x-8 gap-y-10">
+                                  <div className="grid grid-cols-1 gap-x-8 gap-y-6 py-8">
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-4">
                                       {category.featured.map((item) => (
                                         <div key={item.name} className="group relative">
                                           <Link
                                             href={item.href}
-                                            className="block font-medium text-gray-900 group-hover:text-primary-600"
+                                            className="block p-3 rounded-lg hover:bg-gray-50 transition-colors"
                                           >
-                                            {item.name}
+                                            <div className="font-medium text-gray-900 group-hover:text-primary-600 text-sm">
+                                              {item.name}
+                                            </div>
                                           </Link>
                                         </div>
                                       ))}

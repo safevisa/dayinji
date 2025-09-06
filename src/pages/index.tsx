@@ -8,136 +8,17 @@ import Layout from '@/components/layout/Layout'
 import ProductCard from '@/components/products/ProductCard'
 import { Product, Category } from '@/types'
 
-// Mock data for development - replace with actual API calls
-const mockProducts: Product[] = [
-  {
-    id: '1',
-    name: 'Phrozen Sonic Mighty Revo 16K',
-    description: 'Ultra-fine printing with no visible layer lines. Aerospace-grade aluminum structure with dual linear guides for stable and reliable performance.',
-    price: 899.99,
-    originalPrice: 999.99,
-    currency: 'USD',
-    categoryId: 'printers',
-    category: { id: 'printers', name: '3D Printers', slug: '3d-printers', productCount: 12 },
-    images: ['https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=500'],
-    specifications: {
-      'Build Volume': '218.88 × 123 × 235 mm',
-      'Layer Resolution': '0.01-0.3mm',
-      'Print Speed': '30-50mm/h',
-    },
-    inStock: true,
-    stockQuantity: 15,
-    featured: true,
-    createdAt: '2024-01-01',
-    updatedAt: '2024-01-01',
-  },
-  {
-    id: '2',
-    name: 'Phrozen Arco FDM 3D Printer Set',
-    description: 'Large, fast, and stable - 300×300×300mm build volume with up to 1,000mm/s speed. Includes Chroma Kit for 4-color printing.',
-    price: 1299.99,
-    currency: 'USD',
-    categoryId: 'printers',
-    category: { id: 'printers', name: '3D Printers', slug: '3d-printers', productCount: 12 },
-    images: ['https://images.unsplash.com/photo-1612198985863-fbbf7b95b2c4?w=500'],
-    specifications: {
-      'Build Volume': '300 × 300 × 300 mm',
-      'Print Speed': 'Up to 1,000mm/s',
-      'Filament': '1.75mm',
-    },
-    inStock: true,
-    stockQuantity: 8,
-    featured: true,
-    createdAt: '2024-01-01',
-    updatedAt: '2024-01-01',
-  },
-  {
-    id: '3',
-    name: 'Premium 3D Printing Resin',
-    description: 'High-quality resin for detailed 3D prints with excellent surface finish.',
-    price: 29.99,
-    currency: 'USD',
-    categoryId: 'materials',
-    category: { id: 'materials', name: 'Printing Materials', slug: 'materials', productCount: 25 },
-    images: ['https://images.unsplash.com/photo-1593440552154-a4e1b2c2fecc?w=500'],
-    specifications: {
-      'Volume': '1L',
-      'Color': 'Clear',
-      'Curing Time': '8-12 seconds',
-    },
-    inStock: true,
-    stockQuantity: 50,
-    featured: false,
-    createdAt: '2024-01-01',
-    updatedAt: '2024-01-01',
-  },
-  {
-    id: '4',
-    name: 'Professional Curing Station',
-    description: 'UV curing and washing station for post-processing 3D printed parts.',
-    price: 199.99,
-    originalPrice: 249.99,
-    currency: 'USD',
-    categoryId: 'equipment',
-    category: { id: 'equipment', name: 'Post-Processing Equipment', slug: 'equipment', productCount: 18 },
-    images: ['https://images.unsplash.com/photo-1563089145-599997674d42?w=500'],
-    specifications: {
-      'UV Power': '40W',
-      'Washing Volume': '2L',
-      'Timer': '1-99 minutes',
-    },
-    inStock: true,
-    stockQuantity: 12,
-    featured: true,
-    createdAt: '2024-01-01',
-    updatedAt: '2024-01-01',
-  },
-]
-
-const mockCategories: Category[] = [
-  {
-    id: 'printers',
-    name: '3D Printers',
-    slug: '3d-printers',
-    description: 'High-precision 3D printers for professional and hobbyist use',
-    image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=400',
-    productCount: 12,
-  },
-  {
-    id: 'materials',
-    name: 'Printing Materials',
-    slug: 'materials',
-    description: 'Premium resins, filaments, and printing materials',
-    image: 'https://images.unsplash.com/photo-1593440552154-a4e1b2c2fecc?w=400',
-    productCount: 25,
-  },
-  {
-    id: 'equipment',
-    name: 'Post-Processing Equipment',
-    slug: 'equipment',
-    description: 'Curing, washing, and finishing equipment',
-    image: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=400',
-    productCount: 18,
-  },
-  {
-    id: 'scanners',
-    name: '3D Scanners',
-    slug: 'scanners',
-    description: 'Professional 3D scanning solutions',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400',
-    productCount: 8,
-  },
-]
+import { products, categories, featuredProducts, promotions } from '@/data/products'
 
 interface HomeProps {
-  products: Product[]
-  categories: Category[]
+  allProducts: typeof products
+  allCategories: typeof categories
 }
 
-export default function Home({ products, categories }: HomeProps) {
+export default function Home({ allProducts, allCategories }: HomeProps) {
   const { t } = useTranslation('common')
 
-  const featuredProducts = products.filter(product => product.featured)
+  const featuredItems = allProducts.filter(product => product.featured)
 
   return (
     <Layout
@@ -202,20 +83,50 @@ export default function Home({ products, categories }: HomeProps) {
         </div>
       </section>
 
+      {/* 特價耗材推廣 */}
+      <section className="bg-gradient-to-r from-red-500 to-pink-500 text-white py-8">
+        <div className="container">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="text-center md:text-left mb-4 md:mb-0">
+              <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                🔥 {t('promotions.special_price')} | {t('promotions.limited_time')}
+              </h2>
+              <p className="text-red-100 text-lg">
+                {t('promotions.featured_materials')} <span className="font-bold text-yellow-300">{t('promotions.price_range')}</span> {t('promotions.super_value')}
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link 
+                href="/promotions"
+                className="bg-yellow-400 text-red-800 px-6 py-3 rounded-lg font-bold hover:bg-yellow-300 transition-colors"
+              >
+                {t('promotions.shop_now')}
+              </Link>
+              <Link 
+                href="/promotions#materials"
+                className="border-2 border-white text-white px-6 py-3 rounded-lg font-bold hover:bg-white hover:text-red-500 transition-colors"
+              >
+                {t('promotions.view_all')}
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Featured Products */}
       <section className="section-padding bg-gray-50">
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Featured Products
+              {t('products.featured_products')}
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Discover our most popular 3D printers and equipment, trusted by professionals worldwide
+              {t('products.featured_description')}
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.map((product) => (
+            {featuredItems.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
@@ -229,7 +140,7 @@ export default function Home({ products, categories }: HomeProps) {
               href="/products"
               className="btn-primary"
             >
-              View All Products
+              {t('products.view_all_products')}
               <ChevronRightIcon className="ml-2 h-5 w-5" />
             </Link>
           </div>
@@ -241,15 +152,15 @@ export default function Home({ products, categories }: HomeProps) {
         <div className="container">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Shop by Category
+              {t('products.shop_by_category')}
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Find everything you need for your 3D printing journey
+              {t('products.category_description')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((category) => (
+            {allCategories.map((category) => (
               <Link
                 key={category.id}
                 href={`/products?category=${category.slug}`}
@@ -264,9 +175,9 @@ export default function Home({ products, categories }: HomeProps) {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   <div className="absolute bottom-4 left-4 text-white">
-                    <h3 className="font-bold text-lg mb-1">{category.name}</h3>
+                    <h3 className="font-bold text-lg mb-1">{t(category.name)}</h3>
                     <p className="text-sm text-gray-200">
-                      {category.productCount} products
+                      {category.productCount} {t('products.products_count')}
                     </p>
                   </div>
                 </div>
@@ -364,8 +275,8 @@ export default function Home({ products, categories }: HomeProps) {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      products: mockProducts,
-      categories: mockCategories,
+      allProducts: products,
+      allCategories: categories,
       ...(await serverSideTranslations(locale ?? 'zh-TW', ['common'])),
     },
     revalidate: 60, // Revalidate every minute

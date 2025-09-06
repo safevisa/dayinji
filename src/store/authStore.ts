@@ -1,6 +1,36 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { AuthState, User, LoginData, RegisterData } from '@/types'
+
+interface User {
+  id: string
+  email: string
+  firstName: string
+  lastName: string
+  phone?: string
+  address?: string
+  createdAt: string
+  updatedAt: string
+}
+
+interface LoginData {
+  email: string
+  password: string
+}
+
+interface RegisterData {
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+  phone?: string
+}
+
+interface AuthState {
+  user: User | null
+  token: string | null
+  isLoading: boolean
+  isAuthenticated: boolean
+}
 
 interface AuthStore extends AuthState {
   login: (data: LoginData) => Promise<void>

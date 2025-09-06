@@ -525,11 +525,9 @@ func (h *OrderHandler) CreatePaymentIntent(c *gin.Context) {
 	params := &stripe.PaymentIntentParams{
 		Amount:   stripe.Int64(int64(order.Total * 100)), // Convert to cents
 		Currency: stripe.String("usd"),
-		Metadata: map[string]string{
-			"order_id": order.ID,
-			"user_id":  userID,
-		},
 	}
+	params.AddMetadata("order_id", order.ID)
+	params.AddMetadata("user_id", userID)
 
 	pi, err := paymentintent.New(params)
 	if err != nil {

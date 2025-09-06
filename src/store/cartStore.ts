@@ -1,6 +1,29 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { CartState, Cart, CartItem, Product } from '@/types'
+import { Product } from '@/data/products'
+
+interface CartItem {
+  id: string
+  productId: string
+  product: Product
+  quantity: number
+  price: number
+}
+
+interface Cart {
+  id: string
+  userId?: string
+  items: CartItem[]
+  totalAmount: number
+  totalItems: number
+  createdAt: string
+  updatedAt: string
+}
+
+interface CartState {
+  cart: Cart | null
+  isLoading: boolean
+}
 
 interface CartStore extends CartState {
   addItem: (product: Product, quantity?: number) => void
