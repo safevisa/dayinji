@@ -1,24 +1,11 @@
 import type { AppProps } from 'next/app'
 import { appWithTranslation } from 'next-i18next'
-import { QueryClient, QueryClientProvider } from 'react-query'
 import { Toaster } from 'react-hot-toast'
-import { useState } from 'react'
 import '@/styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [queryClient] = useState(() => new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 60 * 1000, // 1 minute
-        cacheTime: 10 * 60 * 1000, // 10 minutes
-        retry: 1,
-        refetchOnWindowFocus: false,
-      },
-    },
-  }))
-
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <Component {...pageProps} />
       <Toaster
         position="top-right"
@@ -44,7 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           },
         }}
       />
-    </QueryClientProvider>
+    </>
   )
 }
 
